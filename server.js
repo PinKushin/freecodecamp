@@ -25,7 +25,7 @@ app.get("/api/hello", function(req, res) {
 
 //Date and time endpoint
 app.get("/api/timestamp", (req, res) => {
-  res.json({ Unix: Date.now(), UTC: Date() });
+  res.json({ unix: Date.now(), utc: Date() });
 });
 
 app.get("/api/timestamp/:date_string", (req, res) => {
@@ -38,14 +38,14 @@ app.get("/api/timestamp/:date_string", (req, res) => {
     //change argument to an int so it can be converted to UTC
     let dInt = parseInt(dString);
     //return unix time as an int and convert to UTC time
-    res.json({ Unix: dString, UTC: new Date(dInt).toUTCString() });
+    res.json({ unix: dString, utc: new Date(dInt).toUTCString() });
   }
   ///handle invalid arguments
   let dObj = new Date(dString);
   if (dObj.toString == "Invalid Date") {
-    res.json({Unix: null, UTC: "Invalid Date"});
+    res.json({unix: null, utc: "Invalid Date"});
   } else {
-    res.json({Unix: dObj.valueOf(), UTC: dObj.toUTCString() });
+    res.json({unix: dObj.valueOf(), utc: dObj.toUTCString() });
   }
   
 });
