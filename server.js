@@ -31,19 +31,23 @@ app.get("/api/timestamp", (req, res) => {
 app.get("/api/timestamp/:date_string", (req, res) => {
   //passing in parameter/argument
   let dString = req.params.date_string;
+  console.log(dString);
   //reg exp to test for 5 or more digits indicating unix time
-  let unixRe = /\d{5,}/;
+  let unixRe = new RegExp("\\d{5,}", "gi");
   //test for unix time
   if (unixRe.test(dString)) {
     //change argument to an int so it can be converted to UTC
-    let dInt = parseInt(dString);
+    let dInt = parseInt(dString, 10);
+    //console.log(dInt + "\n")
     //return unix time as an int and convert to UTC time
     res.json({ unix: dString, utc: new Date(dInt).toUTCString() });
   }
   ///handle invalid arguments
   let dObj = new Date(dString);
-  if (dObj.toString === "Invalid Date") {
-    res.json({unix: "null", utc: "Invalid Date"});
+  console.log(dObj + "\n");
+  if (dObj == "Invalid Date") {
+    res.json({unix: null, utc: "Invalid Date"});
+    
   } else {
     res.json({unix: dObj.valueOf(), utc: dObj.toUTCString() });
   }
